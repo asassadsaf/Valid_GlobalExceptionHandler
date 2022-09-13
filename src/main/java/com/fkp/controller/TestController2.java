@@ -27,6 +27,16 @@ public class TestController2 {
         return new BaseResponse<User>("000000","success","000000", user2);
     }
 
+    /**
+     * 实体中加校验注解的，在参数前加@Validated或@Valid都可以开启校验
+     * @param user2
+     * @return
+     */
+    @RequestMapping(value = "/user3", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public BaseResponse<User> user3(@RequestBody @Validated User user2){
+        return new BaseResponse<User>("000000","success","000000", user2);
+    }
+
 
     static class User{
         @NotBlank(message = "name not be blank")

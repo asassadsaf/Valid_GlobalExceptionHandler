@@ -1,5 +1,6 @@
 package com.fkp.handler;
 
+import com.fkp.constant.ResponseCodeConstant;
 import com.fkp.param.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -34,9 +35,9 @@ public class GlobalExceptionHandler {
             }
         }catch (Exception ex){
             ex.printStackTrace();
-            return BaseResponse.fail("888888", "inner error:" + ex.getMessage());
+            return BaseResponse.fail(ResponseCodeConstant.GLOBAL_INNER_EXCEPTION, "inner error:" + ex.getMessage());
         }
-        return BaseResponse.fail("999999",sb.toString());
+        return BaseResponse.fail(ResponseCodeConstant.GLOBAL_EXCEPTION,sb.toString());
     }
 
     /**
@@ -57,39 +58,9 @@ public class GlobalExceptionHandler {
             }
         }catch (Exception ex){
             ex.printStackTrace();
-            return BaseResponse.fail("888888","inner error:" + ex.getMessage());
+            return BaseResponse.fail(ResponseCodeConstant.GLOBAL_INNER_EXCEPTION,"inner error:" + ex.getMessage());
         }
-        return BaseResponse.fail("999999",sb.toString());
+        return BaseResponse.fail(ResponseCodeConstant.GLOBAL_EXCEPTION,sb.toString());
     }
 
-
-    //{xxx.xxx.xxx}
-//    private static final Pattern CLASS_PATTERN = Pattern.compile("^\\{([a-zA-Z_$][a-zA-Z\\d_$]*\\.)*[a-zA-Z_$][a-zA-Z\\d_$]*}$");
-
-//    @ExceptionHandler(value = {ConstraintViolationException.class})
-//    public BaseResponse<?> exceptionHandler2(ConstraintViolationException e){
-//        StringBuilder sb = new StringBuilder();
-//        try {
-//            for (ConstraintViolation<?> violation : e.getConstraintViolations()) {
-//                log.error("GlobalExceptionHandler--location:{}#{}--message:{}", violation.getRootBeanClass(), violation.getPropertyPath(),violation.getMessage());
-//                String messageTemplate = violation.getMessageTemplate();
-//                if (messageTemplate != null && CLASS_PATTERN.matcher(messageTemplate).matches()){
-//                    String path = violation.getPropertyPath().toString();
-//                    int index = path.lastIndexOf(".");
-//                    if(path.length() - 1 > index){
-//                        //path:方法名.参数名，截取参数名
-//                        sb.append(path.substring(index + 1)).append(violation.getMessage()).append(";");
-//                    }else {
-//                        throw new RuntimeException("PropertyPath Illegal");
-//                    }
-//                }else {
-//                    sb.append(violation.getMessage()).append(";");
-//                }
-//            }
-//        }catch (Exception ex){
-//            ex.printStackTrace();
-//            return BaseResponse.fail("888888","inner error:" + ex.getMessage());
-//        }
-//        return BaseResponse.fail("999999",sb.toString());
-//    }
 }

@@ -14,6 +14,7 @@ import org.springframework.transaction.TransactionSystemException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -254,12 +255,13 @@ public class GlobalExceptionHandler {
     /**
      * 404错误 找不到资源
      *
+     * @param e 异常对象 NoHandlerFoundException
      * @return 统一返回错误信息
      */
     @ExceptionHandler({NoHandlerFoundException.class})
-    public BaseResponse<?> request404() {
+    public BaseResponse<?> request404(NoHandlerFoundException e) {
         String errorCode = ErrorCodeEnum.NoHandlerFoundException.getCode();
-        String errorMessage = ErrorCodeEnum.NoHandlerFoundException.getMsg();
+        String errorMessage = ErrorCodeEnum.NoHandlerFoundException.getMsg() + ": " + e.getMessage();
         log.error("GlobalExceptionHandler -- ExceptionType:{} -- ErrorCode:{} -- ErrorMessage:{}",NoHandlerFoundException.class.toString(), errorCode, errorMessage);
         return BaseResponse.fail(errorCode, errorMessage);
     }
@@ -267,12 +269,26 @@ public class GlobalExceptionHandler {
     /**
      * 405错误 不支持的请求方法
      *
+     * @param e 异常对象 HttpRequestMethodNotSupportedException
      * @return 统一返回错误信息
      */
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
-    public BaseResponse<?> request405() {
+    public BaseResponse<?> request405(HttpRequestMethodNotSupportedException e) {
         String errorCode = ErrorCodeEnum.HttpRequestMethodNotSupportedException.getCode();
-        String errorMessage = ErrorCodeEnum.HttpRequestMethodNotSupportedException.getMsg();
+        String errorMessage = ErrorCodeEnum.HttpRequestMethodNotSupportedException.getMsg() + ": " + e.getMessage();
+        log.error("GlobalExceptionHandler -- ExceptionType:{} -- ErrorCode:{} -- ErrorMessage:{}",HttpRequestMethodNotSupportedException.class.toString(), errorCode, errorMessage);
+        return BaseResponse.fail(errorCode, errorMessage);
+    }
+
+    /**
+     * 415错误 请求的数据类型服务端不支持
+     * @param e 异常对象 HttpMediaTypeNotSupportedException
+     * @return 统一返回错误信息
+     */
+    @ExceptionHandler({HttpMediaTypeNotSupportedException.class})
+    public BaseResponse<?> request415(HttpMediaTypeNotSupportedException e) {
+        String errorCode = ErrorCodeEnum.HttpMediaTypeNotSupportedException.getCode();
+        String errorMessage = ErrorCodeEnum.HttpMediaTypeNotSupportedException.getMsg() + ": " + e.getMessage();
         log.error("GlobalExceptionHandler -- ExceptionType:{} -- ErrorCode:{} -- ErrorMessage:{}",HttpRequestMethodNotSupportedException.class.toString(), errorCode, errorMessage);
         return BaseResponse.fail(errorCode, errorMessage);
     }
@@ -280,12 +296,13 @@ public class GlobalExceptionHandler {
     /**
      * 406错误 当请求处理程序无法生成客户端可接受的响应时引发异常
      *
+     * @param e 异常对象 HttpMediaTypeNotAcceptableException
      * @return 统一返回错误信息
      */
     @ExceptionHandler({HttpMediaTypeNotAcceptableException.class})
-    public BaseResponse<?> request406() {
+    public BaseResponse<?> request406(HttpMediaTypeNotAcceptableException e) {
         String errorCode = ErrorCodeEnum.HttpMediaTypeNotAcceptableException.getCode();
-        String errorMessage = ErrorCodeEnum.HttpMediaTypeNotAcceptableException.getMsg();
+        String errorMessage = ErrorCodeEnum.HttpMediaTypeNotAcceptableException.getMsg() + ": " + e.getMessage();
         log.error("GlobalExceptionHandler -- ExceptionType:{} -- ErrorCode:{} -- ErrorMessage:{}",HttpMediaTypeNotAcceptableException.class.toString(), errorCode, errorMessage);
         return BaseResponse.fail(errorCode, errorMessage);
     }

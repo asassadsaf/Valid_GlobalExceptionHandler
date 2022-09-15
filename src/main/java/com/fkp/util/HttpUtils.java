@@ -2,6 +2,7 @@ package com.fkp.util;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
@@ -28,8 +29,8 @@ import java.util.List;
 
 @Slf4j
 public class HttpUtils {
-    private static PoolingHttpClientConnectionManager cm = null;
-    private static RequestConfig requestConfig = null;
+    private static final PoolingHttpClientConnectionManager cm;
+    private static final RequestConfig requestConfig;
 
     static {
 
@@ -37,6 +38,7 @@ public class HttpUtils {
         try {
             sslsf = new SSLConnectionSocketFactory(SSLContext.getDefault());
         } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
             log.error("创建SSL连接失败");
         }
         RegistryBuilder<ConnectionSocketFactory> registryBuilder = RegistryBuilder.create();
@@ -67,9 +69,14 @@ public class HttpUtils {
         return HttpClients.custom().setConnectionManager(cm).build();
     }
 
-    private static void closeResponse(CloseableHttpResponse closeableHttpResponse) throws IOException {
-        EntityUtils.consume(closeableHttpResponse.getEntity());
-        closeableHttpResponse.close();
+    private static void closeResponse(CloseableHttpResponse closeableHttpResponse) {
+        try {
+            EntityUtils.consume(closeableHttpResponse.getEntity());
+            closeableHttpResponse.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            log.error("httpClient CloseResponse error: {}", e.getMessage());
+        }
     }
 
     /**
@@ -105,10 +112,19 @@ public class HttpUtils {
         httpGet.setConfig(requestConfig);
         httpGet.addHeader("Content-Type", "application/json");
         httpGet.addHeader("lastOperaTime", String.valueOf(System.currentTimeMillis()));
-        closeableHttpResponse = httpClient.execute(httpGet);
-        HttpEntity entity = closeableHttpResponse.getEntity();
-        String response = EntityUtils.toString(entity);
-        closeResponse(closeableHttpResponse);
+        String response = StringUtils.EMPTY;
+        try {
+            closeableHttpResponse = httpClient.execute(httpGet);
+            HttpEntity entity = closeableHttpResponse.getEntity();
+            response = EntityUtils.toString(entity);
+        }catch (IOException e){
+            e.printStackTrace();
+            log.error("httpClient execute error: {}", e.getMessage());
+        }finally {
+            if (closeableHttpResponse != null) {
+                closeResponse(closeableHttpResponse);
+            }
+        }
         return response;
     }
 
@@ -121,7 +137,7 @@ public class HttpUtils {
      * @return 响应结果
      * @throws IOException 抛出IO异常
      */
-    public static String post(JSONObject headers, String url, JSONObject params) throws IOException {
+    public static String post(JSONObject headers, String url, JSONObject params) {
         CloseableHttpClient httpClient = getHttpClient();
         CloseableHttpResponse closeableHttpResponse = null;
         // 创建post请求
@@ -138,10 +154,19 @@ public class HttpUtils {
             StringEntity stringEntity = new StringEntity(params.toJSONString(), "UTF-8");
             httpPost.setEntity(stringEntity);
         }
-        closeableHttpResponse = httpClient.execute(httpPost);
-        HttpEntity entity = closeableHttpResponse.getEntity();
-        String response = EntityUtils.toString(entity);
-        closeResponse(closeableHttpResponse);
+        String response = StringUtils.EMPTY;
+        try {
+            closeableHttpResponse = httpClient.execute(httpPost);
+            HttpEntity entity = closeableHttpResponse.getEntity();
+            response = EntityUtils.toString(entity);
+        }catch (IOException e){
+            e.printStackTrace();
+            log.error("httpClient execute error: {}", e.getMessage());
+        }finally {
+            if (closeableHttpResponse != null) {
+                closeResponse(closeableHttpResponse);
+            }
+        }
         return response;
     }
 
@@ -153,7 +178,7 @@ public class HttpUtils {
      * @return 响应结果
      * @throws IOException 抛出IO异常
      */
-    public static String delete(JSONObject headers, String url, JSONObject params) throws IOException {
+    public static String delete(JSONObject headers, String url, JSONObject params) {
         CloseableHttpClient httpClient = getHttpClient();
         CloseableHttpResponse closeableHttpResponse = null;
         // 创建delete请求，HttpDeleteWithBody 为内部类，类在下面
@@ -170,10 +195,19 @@ public class HttpUtils {
             StringEntity stringEntity = new StringEntity(params.toJSONString(), "UTF-8");
             httpDelete.setEntity(stringEntity);
         }
-        closeableHttpResponse = httpClient.execute(httpDelete);
-        HttpEntity entity = closeableHttpResponse.getEntity();
-        String response = EntityUtils.toString(entity);
-        closeResponse(closeableHttpResponse);
+        String response = StringUtils.EMPTY;
+        try {
+            closeableHttpResponse = httpClient.execute(httpDelete);
+            HttpEntity entity = closeableHttpResponse.getEntity();
+            response = EntityUtils.toString(entity);
+        }catch (IOException e){
+            e.printStackTrace();
+            log.error("httpClient execute error: {}", e.getMessage());
+        }finally {
+            if (closeableHttpResponse != null) {
+                closeResponse(closeableHttpResponse);
+            }
+        }
         return response;
     }
 
@@ -185,7 +219,7 @@ public class HttpUtils {
      * @return 响应结果
      * @throws IOException 抛出IO异常
      */
-    public static String put(JSONObject headers, String url, JSONObject params) throws IOException {
+    public static String put(JSONObject headers, String url, JSONObject params) {
         CloseableHttpClient httpClient = getHttpClient();
         CloseableHttpResponse closeableHttpResponse = null;
         // 创建put请求
@@ -203,10 +237,19 @@ public class HttpUtils {
             httpPut.setEntity(stringEntity);
         }
         // 从响应模型中获得具体的实体
-        closeableHttpResponse = httpClient.execute(httpPut);
-        HttpEntity entity = closeableHttpResponse.getEntity();
-        String response = EntityUtils.toString(entity);
-        closeResponse(closeableHttpResponse);
+        String response = StringUtils.EMPTY;
+        try {
+            closeableHttpResponse = httpClient.execute(httpPut);
+            HttpEntity entity = closeableHttpResponse.getEntity();
+            response = EntityUtils.toString(entity);
+        }catch (IOException e){
+            e.printStackTrace();
+            log.error("httpClient execute error: {}", e.getMessage());
+        }finally {
+            if(closeableHttpResponse != null){
+                closeResponse(closeableHttpResponse);
+            }
+        }
         return response;
     }
 
@@ -231,6 +274,11 @@ public class HttpUtils {
         public HttpDeleteWithBody() {
             super();
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        String s = get(null, "https://petstore3.swagger.io/api/v3/pet/findByTags", null);
+        System.out.println(s);
     }
 }
 

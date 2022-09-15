@@ -1,6 +1,7 @@
 package com.fkp.controller;
 
 import com.fkp.param.BaseResponse;
+import com.fkp.util.HttpUtils;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import java.io.IOException;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -53,7 +55,9 @@ public class TestController {
      * @return
      */
     @RequestMapping(value = "/user4", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public BaseResponse<User> user4(@RequestBody @Validated User user){
+    public BaseResponse<User> user4(@RequestBody @Validated User user) throws IOException {
+        String s = HttpUtils.get(null, "https://petstore3.swagger.io/api/v3/pet/findByTags", null);
+        System.out.println(s);
         return new BaseResponse<User>("000000","success","000000", user);
     }
 

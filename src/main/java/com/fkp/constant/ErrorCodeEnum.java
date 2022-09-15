@@ -24,10 +24,10 @@ public enum ErrorCodeEnum {
     IOException("999994", "IO Exception"),
 
     //参数格式错误
-    ParamsInvalid("999993", "Parameter Format Error"),
+    ParamsInvalid("400", "Parameter Format Error"),
 
     //参数缺失错误
-    ParamMissing("999992", "Parameter Missing"),
+    ParamMissing("400", "Parameter Missing"),
 
     //找不到资源
     NoHandlerFoundException("404", "404 Not Found"),
@@ -60,13 +60,16 @@ public enum ErrorCodeEnum {
     IndexOutOfBoundsException("999986", "Index Out Of Bounds Exception"),
 
     //尝试设置 bean 属性时在类型不匹配时引发异常
-    TypeMismatchException("999985", "Type Mismatch Exception"),
+    TypeMismatchException("400", "Type Mismatch Exception"),
 
     //找不到适合 bean 属性的编辑器或转换器时抛出异常
-    ConversionNotSupportedException("999984", "Not Acceptable"),
+    ConversionNotSupportedException("500", "Not Acceptable"),
 
     //当HttpMessageConverter.write方法失败时由HttpMessageConverter实现抛出
-    HttpMessageNotWritableException("999984", "Not Acceptable");
+    HttpMessageNotWritableException("999984", "Not Acceptable"),
+
+    //415错误，客户端请求的类型服务端不支持
+    HttpMediaTypeNotSupportedException("415", "Unsupported Media Type");
 
 
 

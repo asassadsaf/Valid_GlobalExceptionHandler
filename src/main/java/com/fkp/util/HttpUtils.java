@@ -277,7 +277,15 @@ public class HttpUtils {
     }
 
     public static void main(String[] args) throws IOException {
-        String s = get(null, "https://petstore3.swagger.io/api/v3/pet/findByTags", null);
+        JSONObject heads = new JSONObject();
+        heads.put("t","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1OTE0MzEsIm5iZiI6MTY2MzQ4OTIzMSwiaWF0IjoxNjYzNDg3NDMxLCJqdGkiOiJDTTpjYXRfbWF0Y2g6bHQxMjM0NTYiLCJvcGVuX2lkIjoiIiwidWlkIjoyMjA1NjMyMTgsImRlYnVnIjoiIiwibGFuZyI6IiJ9.zil2REb3jXcwM_5YNw6NpAsZHiUc3IEN77t1Ituk73o");
+        JSONObject params = new JSONObject();
+        params.put("rank_time",1);
+        params.put("rank_score",1);
+        params.put("rank_state",1);
+        params.put("rank_role",1);
+        params.put("skin",1);
+        String s = get(heads, "https://cat-match.easygame2021.com/sheep/v1/game/game_over", params);
         System.out.println(s);
     }
 }

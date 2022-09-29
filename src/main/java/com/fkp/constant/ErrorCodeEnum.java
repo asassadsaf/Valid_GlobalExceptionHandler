@@ -11,6 +11,9 @@ public enum ErrorCodeEnum {
     //全局异常捕获内部异常
     GlobalInnerException("999998", "Global Exception Inner Error"),
 
+    //业务异常
+    BusinessException("999983", "Business Exception"),
+
     //连接异常
     NetworkError("999997", "Network Error"),
 

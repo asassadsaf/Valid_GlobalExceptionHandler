@@ -1,5 +1,8 @@
 package com.fkp.param;
 
+import com.fkp.constant.ErrorCodeEnum;
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.Serializable;
 import java.util.regex.Pattern;
 
@@ -61,6 +64,18 @@ public class BaseResponse<T> implements Serializable {
         res.setStatus(STATUS_SUCCESS);
         res.setMsg(msg);
         res.setData(data);
+        return res;
+    }
+
+    public static <T> BaseResponse<T> fail(String code){
+        BaseResponse<T> res = new BaseResponse<>();
+        res.setCode(code);
+        res.setStatus(STATUS_FAIL);
+        String message = ErrorCodeEnum.getMessage(code);
+        if(StringUtils.isBlank(message)){
+            message = ErrorCodeEnum.UnKnowError.getMsg();
+        }
+        res.setMsg(message);
         return res;
     }
 

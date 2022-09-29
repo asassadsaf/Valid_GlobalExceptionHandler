@@ -71,6 +71,9 @@ public enum ErrorCodeEnum {
     //当HttpMessageConverter.write方法失败时由HttpMessageConverter实现抛出
     HttpMessageNotWritableException("999984", "Not Acceptable"),
 
+    //未知错误
+    UnKnowError("999982", "UnKnow Error!"),
+
     //415错误，客户端请求的类型服务端不支持
     HttpMediaTypeNotSupportedException("415", "Unsupported Media Type");
 

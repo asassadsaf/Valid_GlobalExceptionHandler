@@ -1,5 +1,7 @@
 package com.fkp.exception;
 
+import com.fkp.constant.ErrorCodeEnum;
+
 public class BusinessException extends RuntimeException{
 
     private static final long serialVersionUID = 3319486522727680695L;
@@ -11,6 +13,7 @@ public class BusinessException extends RuntimeException{
     }
 
     public BusinessException(String errorCode){
+        super(ErrorCodeEnum.getMessage(errorCode));
         this.errorCode = errorCode;
     }
 

@@ -42,7 +42,7 @@ public enum ErrorCodeEnum {
     HttpMediaTypeNotAcceptableException("406", "Not Acceptable"),
 
     //运行时异常
-    RuntimeException("500", "Runtime Exception"),
+    RuntimeException("999985", "Runtime Exception"),
 
     //其他异常
     OtherException("999991", "Other Exception"),

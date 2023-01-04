@@ -2,6 +2,7 @@ package com.fkp.controller;
 
 import com.fkp.param.BaseResponse;
 import com.fkp.util.HttpUtils;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +28,10 @@ import java.util.regex.Pattern;
 @Validated
 public class TestController {
     @RequestMapping(value = "/user", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public BaseResponse<User> user(@RequestParam("name") @NotEmpty String name){
+    public BaseResponse<User> user(@RequestParam("name") @NotBlank(message = "name can not be blank!") String name, @RequestParam("age") @Range(min = 20,max = 30,message = "age must between 20 and 30.") Integer age){
         User user = new User();
         user.setName(name);
+        System.out.println(age);
         return new BaseResponse<User>("000000","success","000000", user);
     }
 

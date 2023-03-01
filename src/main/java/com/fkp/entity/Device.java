@@ -20,7 +20,15 @@ import lombok.ToString;
  * 可以在实体类上添加注解@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.ANY, getterVisibility=JsonAutoDetect.Visibility.NONE)
  *      1.JsonAutoDetect.Visibility.ANY : 表示所有字段都可以被发现, 包括private修饰的字段, 解决大小写问题；
  *      2.JsonAutoDetect.Visibility.NONE : 表示get方法不可见,解决字段重复问题。若使用@JsonAutoDetect注解，则使用lombok也需解决字段重复问题，需要添加该属性
- *
+ *FastJson属性匹配规则：
+ *      1.低版本1.2.71之前
+ *              1.如果JavaBean字段有@JSONField注解且name不空时，则对name的值忽略字母大小写和-,_两个字符
+ *              2.否则取JavaBean的字段名，忽略字母大小写和-,_两个字符
+ *              3.JSON中的key忽略is开头并忽略剩余字母大小写和-,_两个字符
+ *      2.高版本1.2.71及之后
+ *              1.如果JavaBean字段有@JSONField注解且name不空时，则取name的值
+ *              2.否则取JavaBean的字段名，忽略字母大小写和-,_两个字符
+ *              3.JSON中的key忽略is开头并忽略剩余字母大小写和-,_两个字符
  */
 @Data
 @NoArgsConstructor

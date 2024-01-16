@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="true">
+
+    <contextName>test</contextName>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} [%file:%line] [%marker] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+<!--    <appender name="business-file-rolling" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <file>${log.home}/kmscore.log</file>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">-->
+<!--            <fileNamePattern>${log.home}/Kms/Kms.log.%i</fileNamePattern>-->
+<!--            &lt;!&ndash;<maxHistory>${maxHistory}</maxHistory>&ndash;&gt;-->
+<!--            &lt;!&ndash;<totalSizeCap>1GB</totalSizeCap>&ndash;&gt;-->
+<!--            <minIndex>1</minIndex>-->
+<!--            <maxIndex>10</maxIndex>-->
+<!--        </rollingPolicy>-->
+<!--        <encoder>-->
+<!--            <pattern>%date{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} [%file:%line] [%marker] - %msg%n</pattern>-->
+<!--        </encoder>-->
+<!--        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
+<!--            <MaxFileSize>1GB</MaxFileSize>-->
+<!--        </triggeringPolicy>-->
+<!--    </appender>-->
+<!--    <appender name="javaStdAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <file>${log.home}/java_std.log</file>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">-->
+<!--            <fileNamePattern>${log.home}/java_std.log.%i</fileNamePattern>-->
+<!--            <minIndex>1</minIndex>-->
+<!--            <maxIndex>10</maxIndex>-->
+<!--        </rollingPolicy>-->
+<!--        <encoder>-->
+<!--            <pattern>%date{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} [%file:%line] [%marker] - %msg%n</pattern>-->
+<!--        </encoder>-->
+<!--        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
+<!--            <MaxFileSize>1GB</MaxFileSize>-->
+<!--        </triggeringPolicy>-->
+<!--    </appender>-->
+
+<!--    <appender name="SYSLOG" class="ch.qos.logback.classic.net.SyslogAppender">-->
+<!--        <syslogHost>10.0.66.12</syslogHost>-->
+<!--        <Port>514</Port>-->
+<!--        <facility>LOCAL1</facility>-->
+<!--        <suffixPattern>%contextName %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} %date - [%level] - [%thread] %logger %msg</suffixPattern>-->
+<!--    </appender>-->
+
+<!--    <appender name="web-appender" class="ch.qos.logback.core.FileAppender">-->
+<!--        <file>${log.home}/webConsole/webConsole.log</file>-->
+<!--        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+<!--            <level>error</level>-->
+<!--        </filter>-->
+<!--        <encoder>-->
+<!--            <pattern>%date{yyyy-MM-dd HH:mm:ss} [KMS-core] %-5level [%file:%line] - %msg%n</pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+<!--    <appender name="key-appender" class="ch.qos.logback.core.FileAppender">-->
+<!--        <file>${log.home}/key.log</file>-->
+<!--        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+<!--            <level>info</level>-->
+<!--        </filter>-->
+<!--        <encoder>-->
+<!--            <pattern>%msg%n</pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+<!--    <logger name="webLogger" level="error">-->
+<!--        <appender-ref ref="web-appender"/>-->
+<!--    </logger>-->
+
+<!--    <logger name="keyLogger" level="error">-->
+<!--        <appender-ref ref="key-appender"/>-->
+<!--    </logger>-->
+    <logger name="javaStd" level="info">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <root level="info">
+<!--        <appender-ref ref="STDOUT"/>-->
+    </root>
+</configuration>

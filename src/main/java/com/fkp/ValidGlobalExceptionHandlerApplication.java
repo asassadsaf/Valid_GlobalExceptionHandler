@@ -11,7 +11,6 @@ public class ValidGlobalExceptionHandlerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ValidGlobalExceptionHandlerApplication.class, args);
-        LogUtils.info("abvc");
     }
 
 }

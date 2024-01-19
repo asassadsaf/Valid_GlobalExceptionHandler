@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LogUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger("javaStd");
+    public static final Logger logger = LoggerFactory.getLogger("javaStd");
 
     public static void error(String stringFormat, Object... args){
         logger.error(buildStringFormat(stringFormat), Thread.currentThread().getStackTrace()[2], args);
